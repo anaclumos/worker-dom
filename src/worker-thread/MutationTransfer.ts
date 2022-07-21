@@ -46,3 +46,10 @@ export function transfer(document: Document | DocumentStub, mutation: Array<numb
     });
   }
 }
+
+export function transferSync(document: Document | DocumentStub, mutation: Array<number>): void {
+  if (process.env.SERVER) {
+    return;
+  }
+  // todo: implement transferSync
+}
