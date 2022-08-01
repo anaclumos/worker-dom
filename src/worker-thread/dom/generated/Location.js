@@ -1,20 +1,20 @@
-"use strict";
+'use strict';
 
-const conversions = require("webidl-conversions");
-const utils = require("./utils.js");
+const conversions = require('webidl-conversions');
+const utils = require('./utils.js');
 
 const implSymbol = utils.implSymbol;
 const ctorRegistrySymbol = utils.ctorRegistrySymbol;
 
-const interfaceName = "Location";
+const interfaceName = 'Location';
 
-exports.is = value => {
+exports.is = (value) => {
   return utils.isObject(value) && utils.hasOwn(value, implSymbol) && value[implSymbol] instanceof Impl.implementation;
 };
-exports.isImpl = value => {
+exports.isImpl = (value) => {
   return utils.isObject(value) && value instanceof Impl.implementation;
 };
-exports.convert = (globalObject, value, { context = "The provided value" } = {}) => {
+exports.convert = (globalObject, value, { context = 'The provided value' } = {}) => {
   if (exports.is(value)) {
     return utils.implForWrapper(value);
   }
@@ -28,7 +28,7 @@ function makeWrapper(globalObject, newTarget) {
   }
 
   if (!utils.isObject(proto)) {
-    proto = globalObject[ctorRegistrySymbol]["Location"].prototype;
+    proto = globalObject[ctorRegistrySymbol]['Location'].prototype;
   }
 
   return Object.create(proto);
@@ -56,16 +56,14 @@ function getUnforgeables(globalObject) {
         }
 
         if (arguments.length < 1) {
-          throw new globalObject.TypeError(
-            `Failed to execute 'assign' on 'Location': 1 argument required, but only ${arguments.length} present.`
-          );
+          throw new globalObject.TypeError(`Failed to execute 'assign' on 'Location': 1 argument required, but only ${arguments.length} present.`);
         }
         const args = [];
         {
           let curArg = arguments[0];
-          curArg = conversions["USVString"](curArg, {
+          curArg = conversions['USVString'](curArg, {
             context: "Failed to execute 'assign' on 'Location': parameter 1",
-            globals: globalObject
+            globals: globalObject,
           });
           args.push(curArg);
         }
@@ -78,16 +76,14 @@ function getUnforgeables(globalObject) {
         }
 
         if (arguments.length < 1) {
-          throw new globalObject.TypeError(
-            `Failed to execute 'replace' on 'Location': 1 argument required, but only ${arguments.length} present.`
-          );
+          throw new globalObject.TypeError(`Failed to execute 'replace' on 'Location': 1 argument required, but only ${arguments.length} present.`);
         }
         const args = [];
         {
           let curArg = arguments[0];
-          curArg = conversions["USVString"](curArg, {
+          curArg = conversions['USVString'](curArg, {
             context: "Failed to execute 'replace' on 'Location': parameter 1",
-            globals: globalObject
+            globals: globalObject,
           });
           args.push(curArg);
         }
@@ -108,7 +104,7 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'get href' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["href"];
+        return esValue[implSymbol]['href'];
       },
       set href(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
@@ -117,12 +113,12 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'set href' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'href' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["href"] = V;
+        esValue[implSymbol]['href'] = V;
       },
       toString() {
         const esValue = this;
@@ -130,45 +126,39 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'toString' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["href"];
+        return esValue[implSymbol]['href'];
       },
       get origin() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'get origin' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'get origin' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["origin"];
+        return esValue[implSymbol]['origin'];
       },
       get protocol() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'get protocol' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'get protocol' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["protocol"];
+        return esValue[implSymbol]['protocol'];
       },
       set protocol(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'set protocol' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'set protocol' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'protocol' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["protocol"] = V;
+        esValue[implSymbol]['protocol'] = V;
       },
       get host() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
@@ -177,7 +167,7 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'get host' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["host"];
+        return esValue[implSymbol]['host'];
       },
       set host(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
@@ -186,39 +176,35 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'set host' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'host' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["host"] = V;
+        esValue[implSymbol]['host'] = V;
       },
       get hostname() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'get hostname' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'get hostname' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["hostname"];
+        return esValue[implSymbol]['hostname'];
       },
       set hostname(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'set hostname' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'set hostname' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'hostname' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["hostname"] = V;
+        esValue[implSymbol]['hostname'] = V;
       },
       get port() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
@@ -227,7 +213,7 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'get port' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["port"];
+        return esValue[implSymbol]['port'];
       },
       set port(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
@@ -236,66 +222,58 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'set port' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'port' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["port"] = V;
+        esValue[implSymbol]['port'] = V;
       },
       get pathname() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'get pathname' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'get pathname' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["pathname"];
+        return esValue[implSymbol]['pathname'];
       },
       set pathname(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'set pathname' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'set pathname' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'pathname' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["pathname"] = V;
+        esValue[implSymbol]['pathname'] = V;
       },
       get search() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'get search' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'get search' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["search"];
+        return esValue[implSymbol]['search'];
       },
       set search(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
 
         if (!exports.is(esValue)) {
-          throw new globalObject.TypeError(
-            "'set search' called on an object that is not a valid instance of Location."
-          );
+          throw new globalObject.TypeError("'set search' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'search' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["search"] = V;
+        esValue[implSymbol]['search'] = V;
       },
       get hash() {
         const esValue = this !== null && this !== undefined ? this : globalObject;
@@ -304,7 +282,7 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'get hash' called on an object that is not a valid instance of Location.");
         }
 
-        return esValue[implSymbol]["hash"];
+        return esValue[implSymbol]['hash'];
       },
       set hash(V) {
         const esValue = this !== null && this !== undefined ? this : globalObject;
@@ -313,13 +291,13 @@ function getUnforgeables(globalObject) {
           throw new globalObject.TypeError("'set hash' called on an object that is not a valid instance of Location.");
         }
 
-        V = conversions["USVString"](V, {
+        V = conversions['USVString'](V, {
           context: "Failed to set the 'hash' property on 'Location': The provided value",
-          globals: globalObject
+          globals: globalObject,
         });
 
-        esValue[implSymbol]["hash"] = V;
-      }
+        esValue[implSymbol]['hash'] = V;
+      },
     });
     Object.defineProperties(unforgeables, {
       assign: { configurable: false, writable: false },
@@ -334,7 +312,7 @@ function getUnforgeables(globalObject) {
       port: { configurable: false },
       pathname: { configurable: false },
       search: { configurable: false },
-      hash: { configurable: false }
+      hash: { configurable: false },
     });
     unforgeablesMap.set(globalObject, unforgeables);
   }
@@ -351,7 +329,7 @@ exports.setup = (wrapper, globalObject, constructorArgs = [], privateData = {}) 
   exports._internalSetup(wrapper, globalObject);
   Object.defineProperty(wrapper, implSymbol, {
     value: new Impl.implementation(globalObject, constructorArgs, privateData),
-    configurable: true
+    configurable: true,
   });
 
   wrapper[implSymbol][utils.wrapperSymbol] = wrapper;
@@ -367,7 +345,7 @@ exports.new = (globalObject, newTarget) => {
   exports._internalSetup(wrapper, globalObject);
   Object.defineProperty(wrapper, implSymbol, {
     value: Object.create(Impl.implementation.prototype),
-    configurable: true
+    configurable: true,
   });
 
   wrapper[implSymbol][utils.wrapperSymbol] = wrapper;
@@ -378,27 +356,27 @@ exports.new = (globalObject, newTarget) => {
 };
 
 const unforgeablesMap = new WeakMap();
-const exposed = new Set(["Window"]);
+const exposed = new Set(['Window']);
 
 exports.install = (globalObject, globalNames) => {
-  if (!globalNames.some(globalName => exposed.has(globalName))) {
+  if (!globalNames.some((globalName) => exposed.has(globalName))) {
     return;
   }
 
   const ctorRegistry = utils.initCtorRegistry(globalObject);
   class Location {
     constructor() {
-      throw new globalObject.TypeError("Illegal constructor");
+      throw new globalObject.TypeError('Illegal constructor');
     }
   }
-  Object.defineProperties(Location.prototype, { [Symbol.toStringTag]: { value: "Location", configurable: true } });
+  Object.defineProperties(Location.prototype, { [Symbol.toStringTag]: { value: 'Location', configurable: true } });
   ctorRegistry[interfaceName] = Location;
 
   Object.defineProperty(globalObject, interfaceName, {
     configurable: true,
     writable: true,
-    value: Location
+    value: Location,
   });
 };
 
-const Impl = require("../../../../brane/impl/Location-impl.js");
+const Impl = require('../../../../brane/impl/Location-impl.js');

@@ -14,14 +14,10 @@
   <body>
     <div src="/scroll-into-view/scroll-into-view.js" id="upgrade-me">
       <p>Demo of <b>element.scrollIntoView()</b></p>
-      <button id="scroll-button" type="button">
-        Scroll down to element <b>#scroll-element</b> !
-      </button>
-      <div style="height:1200px;width:100%;" ><!-- SPACER --></div>
-      <div id="scroll-element" style="height:400px;width:100%;background-color: burlywood;" >
-        <button id="scroll-button-up" type="button">
-            Scroll Up to element <b>#scroll-button</b> !
-          </button>
+      <button id="scroll-button" type="button">Scroll down to element <b>#scroll-element</b> !</button>
+      <div style="height: 1200px; width: 100%"><!-- SPACER --></div>
+      <div id="scroll-element" style="height: 400px; width: 100%; background-color: burlywood">
+        <button id="scroll-button-up" type="button">Scroll Up to element <b>#scroll-button</b> !</button>
       </div>
     </div>
     <script type="module">
@@ -31,7 +27,7 @@
     <script nomodule async="false" defer>
       document.addEventListener(
         'DOMContentLoaded',
-        function() {
+        function () {
           MainThread.upgradeElement(document.getElementById('upgrade-me'), '/dist/worker/worker.js');
         },
         false,

@@ -1,10 +1,11 @@
 # WorkerDOM
 
-An in-progress implementation of the DOM API intended to run within a Web Worker. 
+An in-progress implementation of the DOM API intended to run within a Web Worker.
 
 **Purpose**: Move complexity of intermediate work related to DOM mutations to a background thread, sending only the necessary manipulations to a foreground thread.
 
 **Use Cases**:
+
 1. Embedded content from a third party living side by side with first party code.
 2. Mitigation of expensive rendering for content not requiring synchronous updates to user actions.
 3. Retaining main thread availablity for high priority updates by async updating elsewhere in a document.
@@ -36,7 +37,7 @@ To upgrade this node using the module version of the code, we can directly impor
 
 ```html
 <script type="module">
-  import {upgradeElement} from './dist/main.mjs';
+  import { upgradeElement } from './dist/main.mjs';
   upgradeElement(document.getElementById('upgrade-me'), './dist/worker/worker.mjs');
 </script>
 ```
@@ -44,12 +45,16 @@ To upgrade this node using the module version of the code, we can directly impor
 The nomodule format exposes the global `MainThread`, and could upgrade the `div` in the following way:
 
 ```html
-<script nomodule async=false defer>
-  document.addEventListener('DOMContentLoaded', function() {
-    MainThread.upgradeElement(document.getElementById('upgrade-me'), './dist/worker/worker.js');
-  }, false);
+<script nomodule async="false" defer>
+  document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+      MainThread.upgradeElement(document.getElementById('upgrade-me'), './dist/worker/worker.js');
+    },
+    false,
+  );
 </script>
-``` 
+```
 
 ### AMP Distribution for `amp-script`
 
@@ -98,6 +103,7 @@ In particular, we try to maintain "it might not be perfect but isn't broken"-sup
 ## Local Development
 
 Local development of WorkerDOM assumes the following:
+
 1. Familiarity with `npm` or `yarn`
 2. Latest LTS release of Node (10 at time of writing) available.
 3. Comfort with TypeScript, the codebase and tests are entirely written in TypeScript.
@@ -112,7 +118,7 @@ The AMP Project accepts responsible security disclosures through the [Google App
 
 ## Code of conduct
 
-The AMP Project strives for a positive and growing project community that provides a safe environment for everyone.  All members, committers and volunteers in the community are required to act according to the [code of conduct](CODE_OF_CONDUCT.md).
+The AMP Project strives for a positive and growing project community that provides a safe environment for everyone. All members, committers and volunteers in the community are required to act according to the [code of conduct](CODE_OF_CONDUCT.md).
 
 ## License
 

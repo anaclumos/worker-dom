@@ -1,11 +1,6 @@
 {
   "rules": {
-    "variable-name": [
-      true, 
-      "ban-keywords",
-      "allow-trailing-underscore",
-      "allow-leading-underscore"
-    ],
+    "variable-name": [true, "ban-keywords", "allow-trailing-underscore", "allow-leading-underscore"],
     "prefer-const": true,
     "use-isnan": true,
     "radix": true,
@@ -16,12 +11,9 @@
     "no-string-throw": true,
     "no-unused-expression": true,
     "no-var-keyword": true,
-    "ban": [
+    "ban": [true, "alert", { "name": "Array", "message": "tsstyle#array-constructor" }],
+    "ban-types": [
       true,
-      "alert",
-      {"name": "Array", "message": "tsstyle#array-constructor"}
-    ],
-    "ban-types": [true,
       ["Object", "Use {} instead."],
       ["String", "Use 'string' instead."],
       ["Number", "Use 'number' instead."],

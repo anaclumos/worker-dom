@@ -56,9 +56,7 @@
         });
 
       // Proxy message from parent Window to Worker.
-      listen(MESSAGE_TYPES.postMessage, ({ message }) =>
-        worker.postMessage(message)
-      );
+      listen(MESSAGE_TYPES.postMessage, ({ message }) => worker.postMessage(message));
 
       send(MESSAGE_TYPES.workerReady);
     });

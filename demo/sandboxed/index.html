@@ -14,17 +14,11 @@
     </div>
     <script type="module">
       import { upgradeElement } from '/dist/amp-debug/main.mjs';
-      const worker = await upgradeElement(
-        document.getElementById('upgrade-me'),
-        '/dist/amp-debug/worker/worker.mjs',
-        () => {},
-        undefined,
-        { iframeUrl: 'sandbox-iframe.html' }
-      );
-      worker.onmessage = (msg) =>
-        console.log(`onmessage: ${JSON.stringify(msg)}`);
-      worker.onmessageerror = (msg) =>
-        console.error(`msgerror ${JSON.stringify(msg)}`);
+      const worker = await upgradeElement(document.getElementById('upgrade-me'), '/dist/amp-debug/worker/worker.mjs', () => {}, undefined, {
+        iframeUrl: 'sandbox-iframe.html',
+      });
+      worker.onmessage = (msg) => console.log(`onmessage: ${JSON.stringify(msg)}`);
+      worker.onmessageerror = (msg) => console.error(`msgerror ${JSON.stringify(msg)}`);
       worker.onerror = (msg) => console.error(`error: ${JSON.stringify(msg)}`);
 
       worker.callFunction('getData').then((data) => {

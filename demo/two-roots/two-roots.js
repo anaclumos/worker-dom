@@ -1,7 +1,7 @@
 const btn = document.getElementsByTagName('button')[0];
 
-btn.addEventListener('click', async () => {
+btn.addEventListener('click', () => {
   const infoEl = document.getElementById('info');
-  const boundingClientRect = await infoEl.getBoundingClientRectAsync();
+  const boundingClientRect = infoEl.getBoundingClientRect();
   infoEl.textContent = JSON.stringify(boundingClientRect);
 });

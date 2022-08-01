@@ -6,9 +6,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/ampproject/worker-dom/tree/master/tools/linter",
   "main": "lib/index.js",
-  "keywords": [
-    "babel-plugin"
-  ],
+  "keywords": ["babel-plugin"],
   "scripts": {
     "clean": "rimraf lib",
     "build": "shx cp -r src/ lib",
@@ -32,15 +30,10 @@
     "shx": "0.3.4"
   },
   "lint-staged": {
-    "src/*.js": [
-      "prettier --config config/.prettierrc --write",
-      "git add"
-    ]
+    "src/*.js": ["prettier --config config/.prettierrc --write", "git add"]
   },
   "ava": {
-    "require": [
-      "esm"
-    ]
+    "require": ["esm"]
   },
   "volta": {
     "node": "16.13.2",

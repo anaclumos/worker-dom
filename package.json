@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "description": "A facsimile of a modern DOM implementation intended to run in a Web Worker.",
   "main": "dist/main",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "https://github.com/braneproject/worker-dom.git"
@@ -33,7 +31,8 @@
     "brane:idl": "run-p tsc:worker tsc:main && node brane/scripts/convert-idl.cjs",
     "brane:build": "rollup --config brane/config/rollup.config.js",
     "brane:demo": "node -r esm brane/demo/server.js",
-    "prepack": "npm-run-all clean build brane:build"
+    "prepack": "npm-run-all clean build brane:build",
+    "format": "prettier --write '**/**/*.{ts,js,html,css,json,md}'"
   },
   "devDependencies": {
     "@ampproject/filesize": "4.3.0",
@@ -73,9 +72,7 @@
     "webidl2js": "17.0.0"
   },
   "lint-staged": {
-    "*.{js,ts}": [
-      "prettier --config config/.prettierrc --write"
-    ]
+    "*.{js,ts}": ["prettier --config config/.prettierrc --write"]
   },
   "husky": {
     "hooks": {
@@ -84,11 +81,7 @@
     }
   },
   "filesize": {
-    "track": [
-      "./dist/*.(js|mjs)",
-      "./dist/worker/**/*.(js|mjs)",
-      "./dist/amp-production/**/*.(js|mjs)"
-    ],
+    "track": ["./dist/*.(js|mjs)", "./dist/worker/**/*.(js|mjs)", "./dist/amp-production/**/*.(js|mjs)"],
     "./dist/main.mjs": {
       "brotli": "4 kB"
     },
@@ -115,12 +108,8 @@
     "cjs": true
   },
   "ava": {
-    "require": [
-      "esm"
-    ],
-    "files": [
-      "output/test/**/*.test.js"
-    ]
+    "require": ["esm"],
+    "files": ["output/test/**/*.test.js"]
   },
   "volta": {
     "node": "16.13.2",

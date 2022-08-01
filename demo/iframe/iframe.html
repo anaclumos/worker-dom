@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="/dist/amp-debug/main.mjs" type="module"></script> 
+    <script src="/dist/amp-debug/main.mjs" type="module"></script>
   </head>
   <body>
     <div src="storage.js" id="upgrade-me"></div>
@@ -12,15 +12,15 @@
         get: () => {
           throw new Error('Access denied');
         },
-      }); 
-      delete window.sessionStorage; 
+      });
+      delete window.sessionStorage;
       Object.defineProperty(window, 'sessionStorage', {
         enumerable: true,
         get: () => {
           throw new Error('Access denied');
         },
-      }); 
-      
+      });
+
       import { upgradeElement } from '/dist/amp-debug/main.mjs';
       upgradeElement(document.getElementById('upgrade-me'), '/dist/amp-debug/worker/worker.mjs');
     </script>

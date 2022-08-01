@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 // Returns "Type(value) is Object" in ES terminology.
 function isObject(value) {
-  return (typeof value === "object" && value !== null) || typeof value === "function";
+  return (typeof value === 'object' && value !== null) || typeof value === 'function';
 }
 
 const hasOwn = Function.prototype.call.bind(Object.prototype.hasOwnProperty);
@@ -20,16 +20,13 @@ function define(target, source) {
 
 function newObjectInRealm(globalObject, object) {
   const ctorRegistry = initCtorRegistry(globalObject);
-  return Object.defineProperties(
-    Object.create(ctorRegistry["%Object.prototype%"]),
-    Object.getOwnPropertyDescriptors(object)
-  );
+  return Object.defineProperties(Object.create(ctorRegistry['%Object.prototype%']), Object.getOwnPropertyDescriptors(object));
 }
 
-const wrapperSymbol = Symbol("wrapper");
-const implSymbol = Symbol("impl");
-const sameObjectCaches = Symbol("SameObject caches");
-const ctorRegistrySymbol = Symbol.for("[webidl2js] constructor registry");
+const wrapperSymbol = Symbol('wrapper');
+const implSymbol = Symbol('impl');
+const sameObjectCaches = Symbol('SameObject caches');
+const ctorRegistrySymbol = Symbol.for('[webidl2js] constructor registry');
 
 const AsyncIteratorPrototype = Object.getPrototypeOf(Object.getPrototypeOf(async function* () {}).prototype);
 
@@ -43,19 +40,13 @@ function initCtorRegistry(globalObject) {
   // In addition to registering all the WebIDL2JS-generated types in the constructor registry,
   // we also register a few intrinsics that we make use of in generated code, since they are not
   // easy to grab from the globalObject variable.
-  ctorRegistry["%Object.prototype%"] = globalObject.Object.prototype;
-  ctorRegistry["%IteratorPrototype%"] = Object.getPrototypeOf(
-    Object.getPrototypeOf(new globalObject.Array()[Symbol.iterator]())
-  );
+  ctorRegistry['%Object.prototype%'] = globalObject.Object.prototype;
+  ctorRegistry['%IteratorPrototype%'] = Object.getPrototypeOf(Object.getPrototypeOf(new globalObject.Array()[Symbol.iterator]()));
 
   try {
-    ctorRegistry["%AsyncIteratorPrototype%"] = Object.getPrototypeOf(
-      Object.getPrototypeOf(
-        globalObject.eval("(async function* () {})").prototype
-      )
-    );
+    ctorRegistry['%AsyncIteratorPrototype%'] = Object.getPrototypeOf(Object.getPrototypeOf(globalObject.eval('(async function* () {})').prototype));
   } catch {
-    ctorRegistry["%AsyncIteratorPrototype%"] = AsyncIteratorPrototype;
+    ctorRegistry['%AsyncIteratorPrototype%'] = AsyncIteratorPrototype;
   }
 
   globalObject[ctorRegistrySymbol] = ctorRegistry;
@@ -93,10 +84,10 @@ function tryImplForWrapper(wrapper) {
   return impl ? impl : wrapper;
 }
 
-const iterInternalSymbol = Symbol("internal");
+const iterInternalSymbol = Symbol('internal');
 
 function isArrayIndexPropName(P) {
-  if (typeof P !== "string") {
+  if (typeof P !== 'string') {
     return false;
   }
   const i = P >>> 0;
@@ -110,8 +101,7 @@ function isArrayIndexPropName(P) {
   return true;
 }
 
-const byteLengthGetter =
-    Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, "byteLength").get;
+const byteLengthGetter = Object.getOwnPropertyDescriptor(ArrayBuffer.prototype, 'byteLength').get;
 function isArrayBuffer(value) {
   try {
     byteLengthGetter.call(value);
@@ -124,35 +114,35 @@ function isArrayBuffer(value) {
 function iteratorResult([key, value], kind) {
   let result;
   switch (kind) {
-    case "key":
+    case 'key':
       result = key;
       break;
-    case "value":
+    case 'value':
       result = value;
       break;
-    case "key+value":
+    case 'key+value':
       result = [key, value];
       break;
   }
   return { value: result, done: false };
 }
 
-const supportsPropertyIndex = Symbol("supports property index");
-const supportedPropertyIndices = Symbol("supported property indices");
-const supportsPropertyName = Symbol("supports property name");
-const supportedPropertyNames = Symbol("supported property names");
-const indexedGet = Symbol("indexed property get");
-const indexedSetNew = Symbol("indexed property set new");
-const indexedSetExisting = Symbol("indexed property set existing");
-const namedGet = Symbol("named property get");
-const namedSetNew = Symbol("named property set new");
-const namedSetExisting = Symbol("named property set existing");
-const namedDelete = Symbol("named property delete");
+const supportsPropertyIndex = Symbol('supports property index');
+const supportedPropertyIndices = Symbol('supported property indices');
+const supportsPropertyName = Symbol('supports property name');
+const supportedPropertyNames = Symbol('supported property names');
+const indexedGet = Symbol('indexed property get');
+const indexedSetNew = Symbol('indexed property set new');
+const indexedSetExisting = Symbol('indexed property set existing');
+const namedGet = Symbol('named property get');
+const namedSetNew = Symbol('named property set new');
+const namedSetExisting = Symbol('named property set existing');
+const namedDelete = Symbol('named property delete');
 
-const asyncIteratorNext = Symbol("async iterator get the next iteration result");
-const asyncIteratorReturn = Symbol("async iterator return steps");
-const asyncIteratorInit = Symbol("async iterator initialization steps");
-const asyncIteratorEOI = Symbol("async iterator end of iteration");
+const asyncIteratorNext = Symbol('async iterator get the next iteration result');
+const asyncIteratorReturn = Symbol('async iterator return steps');
+const asyncIteratorInit = Symbol('async iterator initialization steps');
+const asyncIteratorEOI = Symbol('async iterator end of iteration');
 
 module.exports = exports = {
   isObject,
@@ -186,5 +176,5 @@ module.exports = exports = {
   asyncIteratorReturn,
   asyncIteratorInit,
   asyncIteratorEOI,
-  iteratorResult
+  iteratorResult,
 };
