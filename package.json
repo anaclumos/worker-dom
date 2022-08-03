@@ -35,8 +35,7 @@
     "brane:idl": "run-p tsc:worker tsc:main && node brane/scripts/convert-idl.cjs",
     "brane:build": "rollup --config brane/config/rollup.config.js",
     "brane:demo": "node -r esm brane/demo/server.js",
-    "prepack": "npm-run-all clean build brane:build",
-    "format": "prettier --write '**/**/*.{ts,js,html,css,json,md}'"
+    "prepack": "npm-run-all clean build brane:build"
   },
   "devDependencies": {
     "@ampproject/filesize": "4.3.0",

@@ -1,4 +1,7 @@
-import { babelPlugin, replacePlugin } from '../../config/rollup.plugins.js';
+import {
+  babelPlugin,
+  replacePlugin,
+} from '../../config/rollup.plugins.js';
 
 const mainThreadConfig = {
   input: 'output/main-thread/index.brane.js',
@@ -33,4 +36,7 @@ const workerThreadConfig = {
   ],
 };
 
-export default [mainThreadConfig, workerThreadConfig];
+export default [
+  mainThreadConfig,
+  workerThreadConfig,
+];

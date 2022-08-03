@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const conversions = require('webidl-conversions');
-const utils = require('./utils.js');
+const conversions = require("webidl-conversions");
+const utils = require("./utils.js");
 
-exports.convert = (globalObject, value, { context = 'The provided value' } = {}) => {
-  if (typeof value !== 'function') {
-    throw new globalObject.TypeError(context + ' is not a function');
+exports.convert = (globalObject, value, { context = "The provided value" } = {}) => {
+  if (typeof value !== "function") {
+    throw new globalObject.TypeError(context + " is not a function");
   }
 
   function invokeTheCallbackFunction(...args) {
@@ -18,7 +18,7 @@ exports.convert = (globalObject, value, { context = 'The provided value' } = {})
 
     callResult = Reflect.apply(value, thisArg, args);
 
-    callResult = conversions['any'](callResult, { context: context, globals: globalObject });
+    callResult = conversions["any"](callResult, { context: context, globals: globalObject });
 
     return callResult;
   }
@@ -30,7 +30,7 @@ exports.convert = (globalObject, value, { context = 'The provided value' } = {})
 
     let callResult = Reflect.construct(value, args);
 
-    callResult = conversions['any'](callResult, { context: context, globals: globalObject });
+    callResult = conversions["any"](callResult, { context: context, globals: globalObject });
 
     return callResult;
   };

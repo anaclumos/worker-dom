@@ -1,7 +1,10 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "lib": ["es2017", "webworker"],
+    "lib": [
+      "es2017",
+      "webworker"
+    ],
     "outDir": "../../output",
     "sourceMap": true,
     "moduleResolution": "node",
@@ -14,5 +17,9 @@
     "alwaysStrict": true,
     "incremental": true
   },
-  "include": ["*.ts", "**/*.ts", "../../third_party/html-parser/*.ts"]
+  "include": [
+    "*.ts",
+    "**/*.ts",
+    "../../third_party/html-parser/*.ts",
+  ]
 }

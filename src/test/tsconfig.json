@@ -1,7 +1,10 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "lib": ["es2017", "webworker"],
+    "lib": [
+      "es2017",
+      "webworker"
+    ],
     "outDir": "../../output",
     "sourceMap": true,
     "moduleResolution": "node",
@@ -14,6 +17,10 @@
     "alwaysStrict": true,
     "incremental": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["main-thread/**/*.ts"]
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "main-thread/**/*.ts"
+  ]
 }

@@ -1,8 +1,8 @@
-'use strict';
-const whatwgURL = require('whatwg-url');
-const DOMException = require('domexception/webidl2js-wrapper');
-const { documentBaseURL, parseURLToResultingURLRecord } = require('../helpers/document-base-url');
-const { navigate } = require('./navigation');
+"use strict";
+const whatwgURL = require("whatwg-url");
+const DOMException = require("domexception/webidl2js-wrapper");
+const { documentBaseURL, parseURLToResultingURLRecord } = require("../helpers/document-base-url");
+const { navigate } = require("./navigation");
 
 // Not implemented: use of entry settings object's API base URL in href setter, assign, and replace. Instead we just
 // use the document base URL. The difference matters in the case of cross-frame calls.
@@ -52,17 +52,17 @@ exports.implementation = class LocationImpl {
   }
 
   get protocol() {
-    return this._url.scheme + ':';
+    return this._url.scheme + ":";
   }
   set protocol(v) {
     const copyURL = { ...this._url };
 
-    const possibleFailure = whatwgURL.basicURLParse(v + ':', { url: copyURL, stateOverride: 'scheme start' });
+    const possibleFailure = whatwgURL.basicURLParse(v + ":", { url: copyURL, stateOverride: "scheme start" });
     if (possibleFailure === null) {
       throw new TypeError(`Could not parse the URL after setting the procol to "${v}"`);
     }
 
-    if (copyURL.scheme !== 'http' && copyURL.scheme !== 'https') {
+    if (copyURL.scheme !== "http" && copyURL.scheme !== "https") {
       return;
     }
 
@@ -73,13 +73,13 @@ exports.implementation = class LocationImpl {
     const url = this._url;
 
     if (url.host === null) {
-      return '';
+      return "";
     }
     if (url.port === null) {
       return whatwgURL.serializeHost(url.host);
     }
 
-    return whatwgURL.serializeHost(url.host) + ':' + whatwgURL.serializeInteger(url.port);
+    return whatwgURL.serializeHost(url.host) + ":" + whatwgURL.serializeInteger(url.port);
   }
   set host(v) {
     const copyURL = { ...this._url };
@@ -88,14 +88,14 @@ exports.implementation = class LocationImpl {
       return;
     }
 
-    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: 'host' });
+    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: "host" });
 
     this._locationObjectSetterNavigate(copyURL);
   }
 
   get hostname() {
     if (this._url.host === null) {
-      return '';
+      return "";
     }
 
     return whatwgURL.serializeHost(this._url.host);
@@ -107,14 +107,14 @@ exports.implementation = class LocationImpl {
       return;
     }
 
-    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: 'hostname' });
+    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: "hostname" });
 
     this._locationObjectSetterNavigate(copyURL);
   }
 
   get port() {
     if (this._url.port === null) {
-      return '';
+      return "";
     }
 
     return whatwgURL.serializeInteger(this._url.port);
@@ -122,11 +122,11 @@ exports.implementation = class LocationImpl {
   set port(v) {
     const copyURL = { ...this._url };
 
-    if (copyURL.host === null || copyURL.cannotBeABaseURL || copyURL.scheme === 'file') {
+    if (copyURL.host === null || copyURL.cannotBeABaseURL || copyURL.scheme === "file") {
       return;
     }
 
-    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: 'port' });
+    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: "port" });
 
     this._locationObjectSetterNavigate(copyURL);
   }
@@ -138,7 +138,7 @@ exports.implementation = class LocationImpl {
       return url.path[0];
     }
 
-    return '/' + url.path.join('/');
+    return "/" + url.path.join("/");
   }
   set pathname(v) {
     const copyURL = { ...this._url };
@@ -148,30 +148,30 @@ exports.implementation = class LocationImpl {
     }
 
     copyURL.path = [];
-    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: 'path start' });
+    whatwgURL.basicURLParse(v, { url: copyURL, stateOverride: "path start" });
 
     this._locationObjectSetterNavigate(copyURL);
   }
 
   get search() {
-    if (this._url.query === null || this._url.query === '') {
-      return '';
+    if (this._url.query === null || this._url.query === "") {
+      return "";
     }
 
-    return '?' + this._url.query;
+    return "?" + this._url.query;
   }
   set search(v) {
     const copyURL = { ...this._url };
 
-    if (v === '') {
+    if (v === "") {
       copyURL.query = null;
     } else {
-      const input = v[0] === '?' ? v.substring(1) : v;
-      copyURL.query = '';
+      const input = v[0] === "?" ? v.substring(1) : v;
+      copyURL.query = "";
       whatwgURL.basicURLParse(input, {
         url: copyURL,
-        stateOverride: 'query',
-        encodingOverride: this._relevantDocument.charset,
+        stateOverride: "query",
+        encodingOverride: this._relevantDocument.charset
       });
     }
 
@@ -179,25 +179,25 @@ exports.implementation = class LocationImpl {
   }
 
   get hash() {
-    if (this._url.fragment === null || this._url.fragment === '') {
-      return '';
+    if (this._url.fragment === null || this._url.fragment === "") {
+      return "";
     }
 
-    return '#' + this._url.fragment;
+    return "#" + this._url.fragment;
   }
   set hash(v) {
     const copyURL = { ...this._url };
 
-    if (copyURL.scheme === 'javascript') {
+    if (copyURL.scheme === "javascript") {
       return;
     }
 
-    if (v === '') {
+    if (v === "") {
       copyURL.fragment = null;
     } else {
-      const input = v[0] === '#' ? v.substring(1) : v;
-      copyURL.fragment = '';
-      whatwgURL.basicURLParse(input, { url: copyURL, stateOverride: 'fragment' });
+      const input = v[0] === "#" ? v.substring(1) : v;
+      copyURL.fragment = "";
+      whatwgURL.basicURLParse(input, { url: copyURL, stateOverride: "fragment" });
     }
 
     this._locationObjectSetterNavigate(copyURL);
@@ -210,7 +210,7 @@ exports.implementation = class LocationImpl {
     if (parsedURL === null) {
       throw DOMException.create(this._globalObject, [
         `Could not resolve the given string "${url}" relative to the base URL "${this._relevantDocument.URL}"`,
-        'SyntaxError',
+        "SyntaxError"
       ]);
     }
 
@@ -224,7 +224,7 @@ exports.implementation = class LocationImpl {
     if (parsedURL === null) {
       throw DOMException.create(this._globalObject, [
         `Could not resolve the given string "${url}" relative to the base URL "${this._relevantDocument.URL}"`,
-        'SyntaxError',
+        "SyntaxError"
       ]);
     }
 

@@ -1,20 +1,20 @@
-'use strict';
+"use strict";
 
-const conversions = require('webidl-conversions');
-const utils = require('./utils.js');
+const conversions = require("webidl-conversions");
+const utils = require("./utils.js");
 
 const implSymbol = utils.implSymbol;
 const ctorRegistrySymbol = utils.ctorRegistrySymbol;
 
-const interfaceName = 'History';
+const interfaceName = "History";
 
-exports.is = (value) => {
+exports.is = value => {
   return utils.isObject(value) && utils.hasOwn(value, implSymbol) && value[implSymbol] instanceof Impl.implementation;
 };
-exports.isImpl = (value) => {
+exports.isImpl = value => {
   return utils.isObject(value) && value instanceof Impl.implementation;
 };
-exports.convert = (globalObject, value, { context = 'The provided value' } = {}) => {
+exports.convert = (globalObject, value, { context = "The provided value" } = {}) => {
   if (exports.is(value)) {
     return utils.implForWrapper(value);
   }
@@ -28,7 +28,7 @@ function makeWrapper(globalObject, newTarget) {
   }
 
   if (!utils.isObject(proto)) {
-    proto = globalObject[ctorRegistrySymbol]['History'].prototype;
+    proto = globalObject[ctorRegistrySymbol]["History"].prototype;
   }
 
   return Object.create(proto);
@@ -52,7 +52,7 @@ exports.setup = (wrapper, globalObject, constructorArgs = [], privateData = {}) 
   exports._internalSetup(wrapper, globalObject);
   Object.defineProperty(wrapper, implSymbol, {
     value: new Impl.implementation(globalObject, constructorArgs, privateData),
-    configurable: true,
+    configurable: true
   });
 
   wrapper[implSymbol][utils.wrapperSymbol] = wrapper;
@@ -68,7 +68,7 @@ exports.new = (globalObject, newTarget) => {
   exports._internalSetup(wrapper, globalObject);
   Object.defineProperty(wrapper, implSymbol, {
     value: Object.create(Impl.implementation.prototype),
-    configurable: true,
+    configurable: true
   });
 
   wrapper[implSymbol][utils.wrapperSymbol] = wrapper;
@@ -78,17 +78,17 @@ exports.new = (globalObject, newTarget) => {
   return wrapper[implSymbol];
 };
 
-const exposed = new Set(['Window']);
+const exposed = new Set(["Window"]);
 
 exports.install = (globalObject, globalNames) => {
-  if (!globalNames.some((globalName) => exposed.has(globalName))) {
+  if (!globalNames.some(globalName => exposed.has(globalName))) {
     return;
   }
 
   const ctorRegistry = utils.initCtorRegistry(globalObject);
   class History {
     constructor() {
-      throw new globalObject.TypeError('Illegal constructor');
+      throw new globalObject.TypeError("Illegal constructor");
     }
 
     go() {
@@ -100,9 +100,9 @@ exports.install = (globalObject, globalNames) => {
       {
         let curArg = arguments[0];
         if (curArg !== undefined) {
-          curArg = conversions['long'](curArg, {
+          curArg = conversions["long"](curArg, {
             context: "Failed to execute 'go' on 'History': parameter 1",
-            globals: globalObject,
+            globals: globalObject
           });
         } else {
           curArg = 0;
@@ -137,22 +137,24 @@ exports.install = (globalObject, globalNames) => {
       }
 
       if (arguments.length < 2) {
-        throw new globalObject.TypeError(`Failed to execute 'pushState' on 'History': 2 arguments required, but only ${arguments.length} present.`);
+        throw new globalObject.TypeError(
+          `Failed to execute 'pushState' on 'History': 2 arguments required, but only ${arguments.length} present.`
+        );
       }
       const args = [];
       {
         let curArg = arguments[0];
-        curArg = conversions['any'](curArg, {
+        curArg = conversions["any"](curArg, {
           context: "Failed to execute 'pushState' on 'History': parameter 1",
-          globals: globalObject,
+          globals: globalObject
         });
         args.push(curArg);
       }
       {
         let curArg = arguments[1];
-        curArg = conversions['DOMString'](curArg, {
+        curArg = conversions["DOMString"](curArg, {
           context: "Failed to execute 'pushState' on 'History': parameter 2",
-          globals: globalObject,
+          globals: globalObject
         });
         args.push(curArg);
       }
@@ -162,9 +164,9 @@ exports.install = (globalObject, globalNames) => {
           if (curArg === null || curArg === undefined) {
             curArg = null;
           } else {
-            curArg = conversions['USVString'](curArg, {
+            curArg = conversions["USVString"](curArg, {
               context: "Failed to execute 'pushState' on 'History': parameter 3",
-              globals: globalObject,
+              globals: globalObject
             });
           }
         } else {
@@ -183,23 +185,23 @@ exports.install = (globalObject, globalNames) => {
 
       if (arguments.length < 2) {
         throw new globalObject.TypeError(
-          `Failed to execute 'replaceState' on 'History': 2 arguments required, but only ${arguments.length} present.`,
+          `Failed to execute 'replaceState' on 'History': 2 arguments required, but only ${arguments.length} present.`
         );
       }
       const args = [];
       {
         let curArg = arguments[0];
-        curArg = conversions['any'](curArg, {
+        curArg = conversions["any"](curArg, {
           context: "Failed to execute 'replaceState' on 'History': parameter 1",
-          globals: globalObject,
+          globals: globalObject
         });
         args.push(curArg);
       }
       {
         let curArg = arguments[1];
-        curArg = conversions['DOMString'](curArg, {
+        curArg = conversions["DOMString"](curArg, {
           context: "Failed to execute 'replaceState' on 'History': parameter 2",
-          globals: globalObject,
+          globals: globalObject
         });
         args.push(curArg);
       }
@@ -209,9 +211,9 @@ exports.install = (globalObject, globalNames) => {
           if (curArg === null || curArg === undefined) {
             curArg = null;
           } else {
-            curArg = conversions['USVString'](curArg, {
+            curArg = conversions["USVString"](curArg, {
               context: "Failed to execute 'replaceState' on 'History': parameter 3",
-              globals: globalObject,
+              globals: globalObject
             });
           }
         } else {
@@ -229,7 +231,7 @@ exports.install = (globalObject, globalNames) => {
         throw new globalObject.TypeError("'get length' called on an object that is not a valid instance of History.");
       }
 
-      return esValue[implSymbol]['length'];
+      return esValue[implSymbol]["length"];
     }
 
     get state() {
@@ -239,7 +241,7 @@ exports.install = (globalObject, globalNames) => {
         throw new globalObject.TypeError("'get state' called on an object that is not a valid instance of History.");
       }
 
-      return esValue[implSymbol]['state'];
+      return esValue[implSymbol]["state"];
     }
   }
   Object.defineProperties(History.prototype, {
@@ -250,15 +252,15 @@ exports.install = (globalObject, globalNames) => {
     replaceState: { enumerable: true },
     length: { enumerable: true },
     state: { enumerable: true },
-    [Symbol.toStringTag]: { value: 'History', configurable: true },
+    [Symbol.toStringTag]: { value: "History", configurable: true }
   });
   ctorRegistry[interfaceName] = History;
 
   Object.defineProperty(globalObject, interfaceName, {
     configurable: true,
     writable: true,
-    value: History,
+    value: History
   });
 };
 
-const Impl = require('../../../../brane/impl/History-impl.js');
+const Impl = require("../../../../brane/impl/History-impl.js");
