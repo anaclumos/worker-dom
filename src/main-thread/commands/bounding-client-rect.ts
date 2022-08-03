@@ -45,14 +45,6 @@ export const BoundingClientRectProcessor: CommandExecutorInterface = (strings, n
   };
 };
 
-const sleep = async (ms: number) => {
-  const end = Date.now() + ms;
-  while (Date.now() < end) {
-    console.log('sleep');
-  }
-  return Date.now();
-};
-
 export const SynchronousBoundingClientRectProcessor: CommandExecutorInterface = (strings, nodes, workerContext, objectContext, config) => {
   const allowedExecution = config.executorsAllowed.includes(TransferrableMutationType.GET_BOUNDING_CLIENT_RECT);
 
@@ -64,9 +56,6 @@ export const SynchronousBoundingClientRectProcessor: CommandExecutorInterface = 
         console.error('SynchronousBoundingClientRectProcessor: sharedArrayBuffer is null.');
         return startPosition + BoundClientRectMutationIndex.End;
       }
-      console.log('intentional delay for 2 seconds');
-      sleep(2000);
-      console.log('is sharedArrayBuffer null? ', sharedArrayBuffer);
       if (allowedExecution && allowedMutation) {
         const targetIndex = mutations[startPosition + BoundClientRectMutationIndex.Target];
         const target = nodes.getNode(targetIndex);
