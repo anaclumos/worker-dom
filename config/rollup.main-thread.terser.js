@@ -1,5 +1,5 @@
 import compiler from '@ampproject/rollup-plugin-closure-compiler';
-import esbuild from 'rollup-plugin-esbuild';
+import { terser } from 'rollup-plugin-terser';
 import { babelPlugin, replacePlugin } from './rollup.plugins.js';
 
 // Compile plugins should always be added at the end of the plugin list.
@@ -7,7 +7,7 @@ const compilePlugins = [
   compiler({
     env: 'CUSTOM',
   }),
-  esbuild(),
+  terser(),
 ];
 
 // Workers do not natively support ES Modules containing `import` or `export` statments.

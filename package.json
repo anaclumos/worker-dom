@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "A facsimile of a modern DOM implementation intended to run in a Web Worker.",
   "main": "dist/main",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/braneproject/worker-dom.git"
@@ -20,11 +22,13 @@
     "clean": "rimraf output dist",
     "test": "run-p \"tsc:*\" && ava -v",
     "~rollup": "run-p tsc:worker tsc:main && rollup --config config/rollup.config.js",
+    "~rollup:terser": "run-p tsc:worker tsc:main && rollup --config config/rollup.config.terser.js",
     "lint:worker": "tslint -c config/tslint.json -p src/worker-thread/",
     "lint:main": "tslint -c config/tslint.json -p src/main-thread/",
     "lint": "npm-run-all --parallel lint:*",
     "demo": "DEBUG_BUNDLE=true npm-run-all ~rollup && node -r esm demo/server.js",
     "build": "MINIFY_BUNDLE=true npm-run-all ~rollup",
+    "build:terser": "MINIFY_BUNDLE=true npm-run-all ~rollup:terser",
     "presize": "npm-run-all build",
     "size": "filesize",
     "release": "HUSKY_SKIP_HOOKS=1 np --no-2fa",
@@ -42,6 +46,8 @@
     "@babel/preset-env": "7.16.7",
     "@rollup/plugin-babel": "5.3.0",
     "@rollup/plugin-replace": "3.0.1",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.222",
     "@types/node": "16.11.19",
     "@types/sinon": "10.0.6",
     "acorn": "8.7.0",
@@ -51,6 +57,7 @@
     "babel-plugin-transform-remove-console": "6.9.4",
     "benchmark": "2.1.4",
     "diff": "5.0.0",
+    "esbuild": "^0.14.53",
     "esm": "3.2.25",
     "husky": "7.0.4",
     "jsdom": "19.0.0",
@@ -64,6 +71,8 @@
     "rollup": "2.63.0",
     "rollup-plugin-analyzer": "4.0.0",
     "rollup-plugin-babel": "4.4.0",
+    "rollup-plugin-esbuild": "^4.9.1",
+    "rollup-plugin-swc": "^0.2.1",
     "rollup-plugin-terser": "7.0.2",
     "sinon": "12.0.1",
     "sirv": "1.0.19",
@@ -72,7 +81,9 @@
     "webidl2js": "17.0.0"
   },
   "lint-staged": {
-    "*.{js,ts}": ["prettier --config config/.prettierrc --write"]
+    "*.{js,ts}": [
+      "prettier --config config/.prettierrc --write"
+    ]
   },
   "husky": {
     "hooks": {
@@ -81,7 +92,11 @@
     }
   },
   "filesize": {
-    "track": ["./dist/*.(js|mjs)", "./dist/worker/**/*.(js|mjs)", "./dist/amp-production/**/*.(js|mjs)"],
+    "track": [
+      "./dist/*.(js|mjs)",
+      "./dist/worker/**/*.(js|mjs)",
+      "./dist/amp-production/**/*.(js|mjs)"
+    ],
     "./dist/main.mjs": {
       "brotli": "4 kB"
     },
@@ -108,8 +123,12 @@
     "cjs": true
   },
   "ava": {
-    "require": ["esm"],
-    "files": ["output/test/**/*.test.js"]
+    "require": [
+      "esm"
+    ],
+    "files": [
+      "output/test/**/*.test.js"
+    ]
   },
   "volta": {
     "node": "16.13.2",
@@ -118,5 +137,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.1.1",
+  "dependencies": {
+    "rollup-plugin-swc3": "^0.3.0"
+  }
 }
