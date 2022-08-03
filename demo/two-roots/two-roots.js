@@ -4,4 +4,5 @@ btn.addEventListener('click', () => {
   const infoEl = document.getElementById('info');
   const boundingClientRect = infoEl.getBoundingClientRect();
   infoEl.textContent = JSON.stringify(boundingClientRect);
+  infoEl.textContent += '\n this should go after the previous line';
 });
