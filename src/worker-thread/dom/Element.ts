@@ -577,7 +577,7 @@ export class Element extends ParentNode {
           transferredBoundingClientRect = (data as BoundingClientRectToWorker)[TransferrableKeys.data] as TransferrableBoundingClientRect;
         }
 
-        if (transferredBoundingClientRect === undefined) {
+        if (!transferredBoundingClientRect) {
           return defaultValue;
         }
 
