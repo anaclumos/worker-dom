@@ -1,0 +1,22 @@
+{
+  "name": "react-flip-toolkit-list-shuffle-example",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "react": "16.8.x",
+    "react-dom": "16.8.x",
+    "react-scripts": "1.1.4",
+    "react-flip-toolkit": "latest",
+    "lodash.shuffle": "4.2.0"
+  },
+  "devDependencies": {},
+  "homepage": "/react-flip-toolkit-list-shuffle/build",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
