@@ -4,7 +4,7 @@ import { WorkerContext } from './worker';
 import { OffscreenCanvasProcessor } from './commands/offscreen-canvas';
 import { TransferrableMutationType, ReadableMutationType, isUserVisibleMutation } from '../transfer/TransferrableMutation';
 import { EventSubscriptionProcessor } from './commands/event-subscription';
-import { BoundingClientRectProcessor } from './commands/bounding-client-rect';
+import { SynchronousBoundingClientRectProcessor } from './commands/bounding-client-rect';
 import { ChildListProcessor } from './commands/child-list';
 import { AttributeProcessor } from './commands/attribute';
 import { CharacterDataProcessor } from './commands/character-data';
@@ -64,7 +64,7 @@ export class MutatorProcessor {
       [TransferrableMutationType.CHARACTER_DATA]: CharacterDataProcessor.apply(null, args),
       [TransferrableMutationType.PROPERTIES]: PropertyProcessor.apply(null, args),
       [TransferrableMutationType.EVENT_SUBSCRIPTION]: EventSubscriptionProcessor.apply(null, args),
-      [TransferrableMutationType.GET_BOUNDING_CLIENT_RECT]: BoundingClientRectProcessor.apply(null, args),
+      [TransferrableMutationType.GET_BOUNDING_CLIENT_RECT]: SynchronousBoundingClientRectProcessor.apply(null, args), // use sync version
       [TransferrableMutationType.LONG_TASK_START]: sharedLongTaskProcessor,
       [TransferrableMutationType.LONG_TASK_END]: sharedLongTaskProcessor,
       [TransferrableMutationType.OFFSCREEN_CANVAS_INSTANCE]: OffscreenCanvasProcessor.apply(null, args),
@@ -94,6 +94,22 @@ export class MutatorProcessor {
     }
   }
 
+  public mutateSync(phase: Phase, nodes: ArrayBuffer, stringValues: Array<string>, mutations: Uint16Array, sab: SharedArrayBuffer): void {
+    this.stringContext.storeValues(stringValues);
+    this.nodeContext.createNodes(nodes, this.sanitizer);
+    this.mutationQueue = this.mutationQueue.concat(mutations);
+    if (!this.pendingMutations) {
+      this.pendingMutations = true;
+      this.mutationPumpFunction(this.wrapSyncFlush(this.syncFlush, sab), phase);
+    }
+  }
+
+  private wrapSyncFlush = (syncFlushFuntion: Function, sab: SharedArrayBuffer): Function => {
+    return (): void => {
+      syncFlushFuntion(sab);
+    };
+  };
+
   /**
    * Apply all stored mutations syncronously. This method works well, but can cause jank if there are too many
    * mutations to apply in a single frame.
@@ -103,7 +119,7 @@ export class MutatorProcessor {
    * @param allowVisibleMutations
    * @return Array of mutation types that were disallowed.
    */
-  private syncFlush = (allowVisibleMutations: boolean = true): TransferrableMutationType[] => {
+  private syncFlush = (sharedArrayBuffer?: SharedArrayBuffer, allowVisibleMutations: boolean = true): TransferrableMutationType[] => {
     if (WORKER_DOM_DEBUG) {
       console.group('Mutations');
     }
@@ -125,7 +141,7 @@ export class MutatorProcessor {
         if (WORKER_DOM_DEBUG) {
           console.log(allow ? '' : '[disallowed]', ReadableMutationType[mutationType], executor.print(mutationArray, operationStart));
         }
-        operationStart = executor.execute(mutationArray, operationStart, allow);
+        operationStart = executor.execute(mutationArray, operationStart, allow, sharedArrayBuffer);
       }
     });
     if (WORKER_DOM_DEBUG) {

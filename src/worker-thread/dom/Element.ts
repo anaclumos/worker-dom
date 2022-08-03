@@ -10,7 +10,7 @@ import { matchChildrenElements } from './matchElements';
 import { reflectProperties } from './enhanceElement';
 import { store as storeString } from '../strings';
 import { Document } from './Document';
-import { transfer } from '../MutationTransfer';
+import { transfer, transferSync } from '../MutationTransfer';
 import { TransferrableKeys } from '../../transfer/TransferrableKeys';
 import { NodeType, HTML_NAMESPACE } from '../../transfer/TransferrableNodes';
 import { TransferrableBoundingClientRect } from '../../transfer/TransferrableBoundClientRect';
@@ -522,7 +522,9 @@ export class Element extends ParentNode {
           (data as BoundingClientRectToWorker)[TransferrableKeys.target][0] === this[TransferrableKeys.index]
         ) {
           this.ownerDocument.removeGlobalEventListener('message', messageHandler);
-          const transferredBoundingClientRect: TransferrableBoundingClientRect = (data as BoundingClientRectToWorker)[TransferrableKeys.data];
+          const transferredBoundingClientRect: TransferrableBoundingClientRect = (data as BoundingClientRectToWorker)[
+            TransferrableKeys.data
+          ] as TransferrableBoundingClientRect;
           resolve({
             top: transferredBoundingClientRect[0],
             right: transferredBoundingClientRect[1],
@@ -546,6 +548,81 @@ export class Element extends ParentNode {
         setTimeout(resolve, 500, defaultValue); // TODO: Why a magical constant, define and explain.
       }
     });
+  }
+
+  public getBoundingClientRect(): ClientRect {
+    const defaultValue = {
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    };
+    const messageHandler = ({ data }: { data: MessageToWorker }) => {
+      if (
+        data[TransferrableKeys.type] === MessageType.GET_BOUNDING_CLIENT_RECT &&
+        (data as BoundingClientRectToWorker)[TransferrableKeys.target][0] === this[TransferrableKeys.index]
+      ) {
+        this.ownerDocument.removeGlobalEventListener('message', messageHandler);
+        let transferredBoundingClientRect: TransferrableBoundingClientRect | Int32Array;
+        if (
+          (data as BoundingClientRectToWorker)[TransferrableKeys.sharedArrayBuffer] !== undefined &&
+          (data as BoundingClientRectToWorker)[TransferrableKeys.sharedArrayBuffer] instanceof SharedArrayBuffer
+        ) {
+          transferredBoundingClientRect = new Int32Array((data as BoundingClientRectToWorker)[TransferrableKeys.sharedArrayBuffer]!);
+        } else {
+          transferredBoundingClientRect = (data as BoundingClientRectToWorker)[TransferrableKeys.data] as TransferrableBoundingClientRect;
+        }
+
+        if (transferredBoundingClientRect === undefined) {
+          return defaultValue;
+        }
+
+        return {
+          top: transferredBoundingClientRect[0],
+          right: transferredBoundingClientRect[1],
+          bottom: transferredBoundingClientRect[2],
+          left: transferredBoundingClientRect[3],
+          width: transferredBoundingClientRect[4],
+          height: transferredBoundingClientRect[5],
+          x: transferredBoundingClientRect[0],
+          y: transferredBoundingClientRect[3],
+        };
+      }
+    };
+    if (!this.ownerDocument.addGlobalEventListener || !this.isConnected) {
+      console.warn('getBoundingClientRect() is not supported in this environment because it is a Node runtime.');
+      return defaultValue;
+    } else {
+      console.log('getBoundingClientRect initiated by worker thread');
+      this.ownerDocument.addGlobalEventListener('message', messageHandler);
+      const sab = new SharedArrayBuffer(256);
+      const int32 = new Int32Array(sab);
+      transferSync(this.ownerDocument as Document, sab, [TransferrableMutationType.GET_BOUNDING_CLIENT_RECT, this[TransferrableKeys.index]]);
+      console.log('getBoundingClientRect is now waiting indefinitely on worker thread...');
+      Atomics.wait(int32, 0, 0);
+      const transferredBoundingClientRectArray = int32.slice(0, 6);
+      console.log('getBoundingClientRect stopped waiting on worker thread!', transferredBoundingClientRectArray);
+      try {
+        return {
+          top: transferredBoundingClientRectArray[0],
+          right: transferredBoundingClientRectArray[1],
+          bottom: transferredBoundingClientRectArray[2],
+          left: transferredBoundingClientRectArray[3],
+          width: transferredBoundingClientRectArray[4],
+          height: transferredBoundingClientRectArray[5],
+          x: transferredBoundingClientRectArray[0],
+          y: transferredBoundingClientRectArray[3],
+        };
+      } catch (e) {
+        console.error(e);
+        console.log('Something went wrong, returning default value.');
+        return defaultValue;
+      }
+    }
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/click

@@ -26,6 +26,8 @@ export const enum MessageType {
 }
 
 export interface MutationFromWorker {
+  readonly [TransferrableKeys.synchronousTransmission]: boolean;
+  readonly [TransferrableKeys.sharedArrayBuffer]: SharedArrayBuffer;
   readonly [TransferrableKeys.type]: MessageType;
   readonly [TransferrableKeys.phase]: Phase;
   readonly [TransferrableKeys.strings]: Array<string>;
@@ -52,7 +54,9 @@ export interface ValueSyncToWorker {
 export interface BoundingClientRectToWorker {
   [TransferrableKeys.type]: MessageType.GET_BOUNDING_CLIENT_RECT;
   [TransferrableKeys.target]: TransferredNode;
-  [TransferrableKeys.data]: TransferrableBoundingClientRect;
+  // No need because we use SharedArrayBuffer for synchronous transmission. Keeping for compatibility reasons
+  [TransferrableKeys.data]?: TransferrableBoundingClientRect;
+  [TransferrableKeys.sharedArrayBuffer]?: SharedArrayBuffer;
 }
 export interface OffscreenCanvasToWorker {
   [TransferrableKeys.type]: MessageType.OFFSCREEN_CANVAS_INSTANCE;

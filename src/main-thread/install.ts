@@ -59,13 +59,22 @@ export function install(
           return;
         }
 
-        mutatorContext.mutate(
-          (data as MutationFromWorker)[TransferrableKeys.phase],
-          (data as MutationFromWorker)[TransferrableKeys.nodes],
-          (data as MutationFromWorker)[TransferrableKeys.strings],
-          new Uint16Array(data[TransferrableKeys.mutations]),
-        );
-
+        if (data[TransferrableKeys.synchronousTransmission]) {
+          mutatorContext.mutateSync(
+            (data as MutationFromWorker)[TransferrableKeys.phase],
+            (data as MutationFromWorker)[TransferrableKeys.nodes],
+            (data as MutationFromWorker)[TransferrableKeys.strings],
+            new Uint16Array(data[TransferrableKeys.mutations]),
+            data[TransferrableKeys.sharedArrayBuffer],
+          );
+        } else {
+          mutatorContext.mutate(
+            (data as MutationFromWorker)[TransferrableKeys.phase],
+            (data as MutationFromWorker)[TransferrableKeys.nodes],
+            (data as MutationFromWorker)[TransferrableKeys.strings],
+            new Uint16Array(data[TransferrableKeys.mutations]),
+          );
+        }
         if (config.onReceiveMessage) {
           config.onReceiveMessage(message);
         }

@@ -10,9 +10,10 @@ export interface CommandExecutor {
    * @param mutations
    * @param startPosition
    * @param allow
+   * @param sharedArrayBuffer (optional)
    * @return The index (startPosition) of the next mutation.
    */
-  execute(mutations: Uint16Array, startPosition: number, allow: boolean): number;
+  execute(mutations: Uint16Array, startPosition: number, allow: boolean, sharedArrayBuffer?: SharedArrayBuffer): number;
 
   print(mutations: Uint16Array, startPosition: number): {};
 }
@@ -24,5 +25,6 @@ export interface CommandExecutorInterface {
     workerContext: WorkerContext,
     objectContext: ObjectContext,
     config: WorkerDOMConfiguration,
+    sharedArrayBuffer?: SharedArrayBuffer,
   ): CommandExecutor;
 }

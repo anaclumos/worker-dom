@@ -47,9 +47,27 @@ export function transfer(document: Document | DocumentStub, mutation: Array<numb
   }
 }
 
-export function transferSync(document: Document | DocumentStub, mutation: Array<number>): void {
+export function transferSync(document: Document | DocumentStub, sharedArrayBuffer: SharedArrayBuffer, mutation: Array<number>): void {
   if (process.env.SERVER) {
     return;
   }
-  // todo: implement transferSync
+
+  if (phase > Phase.Initializing && document[TransferrableKeys.allowTransfer]) {
+    const nodes = new Uint16Array(consumeNodes().reduce((acc: Array<number>, node: Node) => acc.concat(node[TransferrableKeys.creationFormat]), []))
+      .buffer;
+    const mutations = new Uint16Array(mutation).buffer;
+    document.postMessage(
+      {
+        [TransferrableKeys.synchronousTransmission]: true,
+        [TransferrableKeys.sharedArrayBuffer]: sharedArrayBuffer,
+        [TransferrableKeys.phase]: phase,
+        [TransferrableKeys.type]: phase === Phase.Mutating ? MessageType.MUTATE : MessageType.HYDRATE,
+        [TransferrableKeys.nodes]: nodes,
+        [TransferrableKeys.strings]: consumeStrings(),
+        [TransferrableKeys.mutations]: mutations,
+      } as MutationFromWorker,
+      [nodes, mutations],
+    );
+    setPhase(Phase.Mutating);
+  }
 }
