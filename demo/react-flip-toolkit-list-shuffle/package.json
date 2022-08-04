@@ -5,13 +5,12 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "lodash.shuffle": "4.2.0",
     "react": "16.8.x",
     "react-dom": "16.8.x",
-    "react-scripts": "1.1.4",
     "react-flip-toolkit": "latest",
-    "lodash.shuffle": "4.2.0"
+    "react-scripts": "^5.0.1"
   },
-  "devDependencies": {},
   "homepage": "/react-flip-toolkit-list-shuffle/build",
   "scripts": {
     "start": "react-scripts start",

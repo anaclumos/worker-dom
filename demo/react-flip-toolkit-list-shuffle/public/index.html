@@ -5,10 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
     <title>React App</title>
+    <script src="/dist/debug/main.mjs" type="module"></script>
+    <script src="/dist/debug/main.js" nomodule defer></script>
+    <style>
+      .upgrade-me {
+        margin: 8px;
+        padding: 8px;
+        border: 1px dashed lightgray;
+      }
+    </style>
+    <script>
+      console.log('crossOriginIsolated', crossOriginIsolated);
+    </script>
   </head>
-
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
-    <div id="root"></div>
+    <div src="../src/index.js" id="root" id="upgrade-me" class="upgrade-me"></div>
   </body>
+  <script type="module">
+    import { upgradeElement } from '/dist/main.mjs';
+    document.querySelectorAll('.upgrade-me').forEach(function (element) {
+      upgradeElement(element, '/dist/debug/worker/worker.mjs');
+      console.log('Upgrade complete');
+    });
+  </script>
+  <script nomodule async="false" defer>
+    document.addEventListener(
+      'DOMContentLoaded',
+      function () {
+        document.querySelectorAll('.upgrade-me').forEach(function (element) {
+          MainThread.upgradeElement(element, '/dist/debug/worker/worker.js');
+        });
+        console.log('Upgrade complete');
+      },
+      false,
+    );
+  </script>
 </html>
