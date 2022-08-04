@@ -19,6 +19,7 @@ const ALLOWABLE_MESSAGE_TYPES = [MessageType.MUTATE, MessageType.HYDRATE];
  * @param debug
  */
 export function fetchAndInstall(baseElement: HTMLElement, config: InboundWorkerDOMConfiguration): Promise<ExportedWorker | null> {
+  console.log('fetchAndInstall');
   const fetchPromise = Promise.all([
     // TODO(KB): Fetch Polyfill for IE11.
     fetch(config.domURL).then((response) => response.text()),
@@ -37,6 +38,7 @@ export function install(
   baseElement: HTMLElement,
   config: InboundWorkerDOMConfiguration,
 ): Promise<ExportedWorker | null> {
+  console.log('install');
   const mode = baseElement.dataset['shadowDom'];
   if (mode === 'open' || mode === 'closed') {
     const shadowRoot = baseElement.attachShadow({ mode });

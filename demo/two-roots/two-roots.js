@@ -1,5 +1,5 @@
 const btn = document.getElementsByTagName('button')[0];
-
+console.log('EXECUTING');
 btn.addEventListener('click', async () => {
   const infoEl = document.getElementById('info');
   const boundingClientRect = await infoEl.getBoundingClientRect();

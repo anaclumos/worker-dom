@@ -95,6 +95,7 @@ export class MutatorProcessor {
   }
 
   public mutateSync(phase: Phase, nodes: ArrayBuffer, stringValues: Array<string>, mutations: Uint16Array, sab: SharedArrayBuffer): void {
+    console.log('mutateSync');
     this.stringContext.storeValues(stringValues);
     this.nodeContext.createNodes(nodes, this.sanitizer);
     this.mutationQueue = this.mutationQueue.concat(mutations);

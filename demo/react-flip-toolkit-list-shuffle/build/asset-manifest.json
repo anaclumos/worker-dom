@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/react-flip-toolkit-list-shuffle/build/static/js/bundle.js",
+    "index.html": "/react-flip-toolkit-list-shuffle/build/index.html",
+    "bundle.js.map": "/react-flip-toolkit-list-shuffle/build/static/js/bundle.js.map"
+  },
+  "entrypoints": [
+    "static/js/bundle.js"
+  ]
+}
